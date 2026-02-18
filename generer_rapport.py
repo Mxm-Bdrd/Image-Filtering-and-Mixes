@@ -31,7 +31,6 @@ def obtenir_css(accent_color="#4fc3f7"):
         .algorithm-box h4 {{ color: {accent_color}; margin: 0 0 10px 0; }}
         .algorithm-box p {{ margin: 5px 0; line-height: 1.6; }}
 
-        /* Conteneurs et grilles */
         .figure-container {{ display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 12px; }}
         .figure-container img {{ max-width: 80%; max-height: 500px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); cursor: zoom-in; transition: transform 0.2s; }}
         .figure-container img:hover {{ transform: scale(1.02); }}
@@ -43,7 +42,6 @@ def obtenir_css(accent_color="#4fc3f7"):
         .image-grid-item img {{ width: 100%; height: auto; display: block; }}
         .image-grid-item .image-label {{ position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: #fff; padding: 15px 10px 10px; font-size: 0.9em; text-align: center; }}
 
-        /* --- LIGHTBOX (OUVERTURE À 150%) --- */
         .lightbox {{ display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); animation: fadeIn 0.3s; overflow: auto; }}
         .lightbox.active {{ display: flex; align-items: center; justify-content: center; }}
         .lightbox-content {{ margin: auto; padding: 20px; display: flex; align-items: center; justify-content: center; }}
@@ -55,13 +53,10 @@ def obtenir_css(accent_color="#4fc3f7"):
             border-radius: 8px; 
             box-shadow: 0 0 30px rgba(0,0,0,0.8); 
             transition: transform 0.3s ease; 
-            
-            /* Zoom par défaut à 150% dès que la fenêtre s'ouvre */
             transform: scale(1.2); 
             cursor: zoom-out; 
         }}
         
-        /* La classe qui s'active au clic pour "dé-zoomer" et voir l'image en entier */
         .lightbox-content img.fit-screen {{
             transform: scale(1);
             cursor: zoom-in;
@@ -114,7 +109,6 @@ def document_html(titre, sous_titre, icone, contenu, accent_color="#4fc3f7"):
         function openLightbox(img) {{
             const lbImg = document.getElementById('lightbox-img');
             lbImg.src = img.src;
-            // On réinitialise la classe pour s'assurer que l'image ouvre à 150% (sans la classe fit-screen)
             lbImg.className = ''; 
             document.getElementById('lightbox').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -128,7 +122,6 @@ def document_html(titre, sous_titre, icone, contenu, accent_color="#4fc3f7"):
             }}
         }}
         
-        // Clic sur l'image : on alterne entre le zoom 150% par défaut et l'écran complet (fit-screen)
         document.getElementById('lightbox-img').addEventListener('click', function(e) {{
             this.classList.toggle('fit-screen'); 
             e.stopPropagation(); 
@@ -208,23 +201,19 @@ def generer_rapport():
     contenu += section("Images hybrides", contenu_sec1, icone="🎭")
 
 
-    # 1. Image Dali
     contenu_sec2 += figure("Pile_Lincoln_Gala.png", "Piles de Gauss (haut) et de Laplace (bas) pour Lincoln et Gala")
 
-    # 2. Explication Dali
+
     contenu_sec2 += boite_texte("Observations des piles de Lincoln et Gala",
                                 "Dans la pile gaussienne, on voit qu'en augmentant le flou gaussien (les basses fréquences), la silhouette de Gala disparaît pour révéler le visage de Lincoln. La pile laplacienne du bas isole les hautes fréquences. On devrait donc voir seulement la silhouette de Gala dans les premières images, mais ce n'est pas le cas. Je vais réessayer avec mon image dans la Sé de Porto. ")
-
-    # 3. Image Hybride Personnelle
     contenu_sec2 += figure("Pile_Protugal.png", "Piles de Gauss et Laplace pour mon image hybride du Portugal")
 
-    # 4. Explication Hybride Personnelle
+
     contenu_sec2 += boite_texte("Observations des piles de mon image hybride",
                                 "La pile laplacienne isole mieux les détails de l'image vue de près que la pile précédente, mais on voit maintenant ce que la capsule du cours nous disait de nous méfier : du ghosting. Je devrai jouer avec les paramètres pour plus atténuer les basses fréquences dans le futur lorsqu'il y a des vêtements foncés.")
-    # 3. Image Hybride Personnelle
+
     contenu_sec2 += figure("Pyramide_Lincoln_Gala.png", "Pyramide de Gauss et Laplace pour Lincoln et Gala")
 
-    # 4. Explication Hybride Personnelle
     contenu_sec2 += boite_texte("Observations des pyramides",
                                 "La pyramide résultante de mon image hybride est extrêmement semblable à sa pile. J'en conclus qu'il est beaucoup plus avantageux d'utiliser un pyramide car les calculs de filtres gaussiens se font sur des images de plus en plus petites. On ne doit donc pas augmenter le sigma du filtre à chaque fois (et celui-ci augmente très très rapidement en 2^n). Je crois aussi que cela permet un meilleur stockage en mémoire à cause des images avec une résolution qui diminue au lieu de plusieurs images hautes résolution. Je ne vois pas de différence remarquable sur mes images, mais il est à noter que le sous-échantillonnage de la pyramide perd de l'information dans les hautes fréquences. En théorie, on devrait voir une petite perte de qualité (en théorie).")
     contenu += section("Piles Gaussiennes et Laplaciennes", contenu_sec2, icone="📚")
