@@ -1,11 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from imageio.v2 import imread
-from skimage.metrics import mean_squared_error
 from skimage.util import img_as_float, img_as_ubyte
 from skimage.transform import resize
 from main_pile import creer_piles
-import os
 
 
 def redimensionner(img_ref, img_a_changer):
