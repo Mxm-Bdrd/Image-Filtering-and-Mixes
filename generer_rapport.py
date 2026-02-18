@@ -205,19 +205,71 @@ def generer_rapport():
 
     contenu_sec1 += boite_texte("Effet de la couleur",
                                 "J'ai tenté l'expérience avec mes photos en couleur. L'overlap de couleur rend l'effet beaucoup moins impressionnant. Il aurait fallu garder la couleur des basses fréquences, mais couper celles des hautes fréquences. L'effet est surtout dû au couleur des basses fréquences et la détails en nuances de gris aurait donné une bien meilleure image hybride (les couleurs des hautes fréquences sont bien moins perceptibles de toute façon).")
+    contenu += section("Images hybrides", contenu_sec1, icone="🎭")
 
 
-    contenu_sec2 += ''
+    # 1. Image Dali
+    contenu_sec2 += figure("Pile_Lincoln_Gala.png", "Piles de Gauss (haut) et de Laplace (bas) pour Lincoln et Gala")
+
+    # 2. Explication Dali
+    contenu_sec2 += boite_texte("Observations des piles de Lincoln et Gala",
+                                "Dans la pile gaussienne, on voit qu'en augmentant le flou gaussien (les basses fréquences), la silhouette de Gala disparaît pour révéler le visage de Lincoln. La pile laplacienne du bas isole les hautes fréquences. On devrait donc voir seulement la silhouette de Gala dans les premières images, mais ce n'est pas le cas. Je vais réessayer avec mon image dans la Sé de Porto. ")
+
+    # 3. Image Hybride Personnelle
+    contenu_sec2 += figure("Pile_Protugal.png", "Piles de Gauss et Laplace pour mon image hybride du Portugal")
+
+    # 4. Explication Hybride Personnelle
+    contenu_sec2 += boite_texte("Observations des piles de mon image hybride",
+                                "La pile laplacienne isole mieux les détails de l'image vue de près que la pile précédente, mais on voit maintenant ce que la capsule du cours nous disait de nous méfier : du ghosting. Je devrai jouer avec les paramètres pour plus atténuer les basses fréquences dans le futur lorsqu'il y a des vêtements foncés.")
+    # 3. Image Hybride Personnelle
+    contenu_sec2 += figure("Pyramide_Lincoln_Gala.png", "Pyramide de Gauss et Laplace pour Lincoln et Gala")
+
+    # 4. Explication Hybride Personnelle
+    contenu_sec2 += boite_texte("Observations des pyramides",
+                                "La pyramide résultante de mon image hybride est extrêmement semblable à sa pile. J'en conclus qu'il est beaucoup plus avantageux d'utiliser un pyramide car les calculs de filtres gaussiens se font sur des images de plus en plus petites. On ne doit donc pas augmenter le sigma du filtre à chaque fois (et celui-ci augmente très très rapidement en 2^n). Je crois aussi que cela permet un meilleur stockage en mémoire à cause des images avec une résolution qui diminue au lieu de plusieurs images hautes résolution. Je ne vois pas de différence remarquable sur mes images, mais il est à noter que le sous-échantillonnage de la pyramide perd de l'information dans les hautes fréquences. En théorie, on devrait voir une petite perte de qualité (en théorie).")
+    contenu += section("Piles Gaussiennes et Laplaciennes", contenu_sec2, icone="📚")
 
 
     contenu_sec3 += ''
 
+    pommange_figures = [
+        {"src": "pommange.png", "label": "La pommange"},
+        {"src": "pommange_figure.png", "label": "Pile Laplacienne"}
+    ]
+    contenu_sec3 += grille_images(pommange_figures, titre="La pommange")
 
-    contenu += section("Images hybrides", contenu_sec1, icone="🎭")
+    contenu_sec3 += boite_texte("Approche",
+                                "Pour reproduire l'exemple du cours, j'ai utilisé un masque vertical avec une transition nette au centre. "
+                                "L'algorithme de mélange multirésolution sépare l'image en bandes de fréquences. "
+                                "Dans les basses fréquences (haut de la pile), le masque devient très flou, ce qui mélange les couleurs de la pomme et de l'orange dans la zone. "
+                                "Dans les hautes fréquences, la transition est plus apique."
+                                "Je trouve que ça fait une fusion semi-naturelle.")
 
-    contenu += section("Piles Gaussiennes et Laplaciennes", contenu_sec2, icone="📚")
+    creatif_figures = [
+        {"src": "irregulier.png", "label": "Le bleuet planète"},
+        {"src": "irregulier_masque.png", "label": "Masque"},
+        {"src": "irregulier_figures.png", "label": "Pile Laplacienne"},
+    ]
+    contenu_sec3 += grille_images(creatif_figures, titre="Mélange avec masque irrégulier")
+
+    contenu_sec3 += boite_texte("Explications",
+                                "J'ai incrusté une image de la Terre à la place d'un bleuet en utilisant un masque en rond codé <strong>manuellement</strong> aux coordonnées du bleuet. "
+                                "Grâce à la pile laplacienne, le contraste net du bord de la planète est semi-préservé, mais l'ajustement manuel n'est pas parfait. J'en conclus que les masques sont plus facilement fait sur Photoshop.")
+
+    perso_figures = [
+        {"src": "Perso.png", "label": "Fusion Portugal"},
+        {"src": "Perso_masque.png", "label": "Masque"},
+        {"src": "Perso_figure.png", "label": "Pile Laplacienne"},
+    ]
+    contenu_sec3 += grille_images(perso_figures, titre="Fusion de mes photos personnelles")
+
+    contenu_sec3 += boite_texte("Explications",
+                                "J'ai appliqué le procédé sur mes deux photo au Portugal."
+                                "Je voulais fusionner 2 personnes verticalement dans le même décor."
+                                "Les détails des deux photos sont additionnés couche par couche, mais il y a une coupure très laide à cause que les personnes ne sont pas parfaitement aligné par rapport au décors. Peut-être qu'un masque plus complexe aurait donné un meilleur résultat.")
 
     contenu += section("Mélange multirésolution", contenu_sec3, icone="🍄")
+
 
     sous_titre = "Photographie algorithmique<br> Maxime Bédard"
 
